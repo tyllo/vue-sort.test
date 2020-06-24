@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 
 const LINK_LIST = [
   {
@@ -23,11 +24,17 @@ const LINK_LIST = [
   },
   {
     label: 'История добавлений',
-    route: { name: 'history.add' },
+    route: {
+      name: 'history',
+      params: { type: HANDLE_TYPES.ADD },
+    },
   },
   {
     label: 'История удалений',
-    route: { name: 'history.remove' },
+    route: {
+      name: 'history',
+      params: { type: HANDLE_TYPES.REMOVE },
+    },
   },
 ];
 

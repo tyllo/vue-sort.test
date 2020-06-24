@@ -23,12 +23,8 @@
 </template>
 
 <script>
+import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 import HomePanelButton from './HomePanelButton.vue';
-
-const TYPES = {
-  ADD: 'add',
-  REMOVE: 'remove',
-};
 
 export default {
   name: 'HomePanel',
@@ -43,7 +39,7 @@ export default {
     type: {
       type: String,
       required: true,
-      validator: (prop) => Object.values(TYPES).includes(prop),
+      validator: (prop) => Object.values(HANDLE_TYPES).includes(prop),
     },
   },
   methods: {

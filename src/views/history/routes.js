@@ -1,17 +1,14 @@
+import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
+
+const types = Object.values(HANDLE_TYPES).join('|');
+
+console.log(`/history/:type(${types})?`);
+
 export default [
   {
-    path: '/history',
+    path: `/history/:type(${types})?`,
     name: 'history',
+    props: true,
     component: () => import('./ViewHistory.vue'),
-  },
-  {
-    path: '/history/add',
-    name: 'history.add',
-    component: () => import('./ViewHistoryAdd.vue'),
-  },
-  {
-    path: '/history/remove',
-    name: 'history.remove',
-    component: () => import('./ViewHistoryRemove.vue'),
   },
 ];

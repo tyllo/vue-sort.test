@@ -7,11 +7,7 @@
 </template>
 
 <script>
-
-const NAMES = {
-  ADD: 'add',
-  REMOVE: 'remove',
-};
+import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 
 export default {
   name: 'HomePanelButton',
@@ -19,7 +15,7 @@ export default {
     name: {
       type: String,
       required: true,
-      validator: (prop) => Object.values(NAMES).includes(prop),
+      validator: (prop) => Object.values(HANDLE_TYPES).includes(prop),
     },
   },
   computed: {
@@ -27,10 +23,10 @@ export default {
       const { name } = this;
 
       switch (name) {
-        case NAMES.ADD:
+        case HANDLE_TYPES.ADD:
           return 'home-panel-button--add';
 
-        case NAMES.REMOVE:
+        case HANDLE_TYPES.REMOVE:
           return 'home-panel-button--remove';
 
         default:

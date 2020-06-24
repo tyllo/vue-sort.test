@@ -1,9 +1,5 @@
 import { api } from '@/api';
-
-const HANDLE_TYPE = {
-  ADD: 'ADD',
-  REMOVE: 'REMOVE',
-};
+import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 
 const createState = () => ({
   dataList: [],
@@ -24,10 +20,10 @@ const getters = {
   },
 
   addHistoryList: (state) => state.historyList
-    .filter((_) => _.type === HANDLE_TYPE.ADD),
+    .filter((_) => _.type === HANDLE_TYPES.ADD),
 
   removeHistoryList: (state) => state.historyList
-    .filter((_) => _.type === HANDLE_TYPE.REMOVE),
+    .filter((_) => _.type === HANDLE_TYPES.REMOVE),
 };
 
 const mutations = {
@@ -51,22 +47,22 @@ const actions = {
   },
 
   addData({ dispatch }, data) {
-    dispatch('handleData', { type: HANDLE_TYPE.ADD, data });
+    dispatch('handleData', { type: HANDLE_TYPES.ADD, data });
   },
 
   removeData({ dispatch }, data) {
-    dispatch('handleData', { type: HANDLE_TYPE.REMOVE, data });
+    dispatch('handleData', { type: HANDLE_TYPES.REMOVE, data });
   },
 
   handleData({ state, commit }, { type, data }) {
     let { copyList } = state;
 
     switch (type) {
-      case HANDLE_TYPE.ADD:
+      case HANDLE_TYPES.ADD:
         copyList = copyList.concat(data);
         break;
 
-      case HANDLE_TYPE.REMOVE:
+      case HANDLE_TYPES.REMOVE:
         copyList = copyList.filter((_) => _.id !== data.id);
         break;
 
@@ -74,7 +70,7 @@ const actions = {
     }
 
     commit('setCopyList', copyList);
-    commit('setHistory', { date: new Date(), data, type });
+    commit('setHistory', { date: new Date().getTime(), data, type });
   },
 };
 
