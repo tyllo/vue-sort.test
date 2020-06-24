@@ -63,7 +63,6 @@ $input-height: 37px;
 .view-home {
   display: flex;
   flex-direction: column;
-  padding: 30px;
 
   &__row {
     display: flex;

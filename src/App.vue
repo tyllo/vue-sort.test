@@ -50,6 +50,7 @@ export default {
       try {
         await this.getData();
       } catch (e) {
+        // elint-disable-next-line no-console
         console.log(e);
         this.isError = true;
       }
@@ -61,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/styles/variables.scss';
+@import '~@/styles/_variables.scss';
 
 $max-width: 768px;
 
@@ -88,7 +89,7 @@ $max-width: 768px;
       margin: 0 auto;
       width: 100%;
       max-width: $max-width;
-      min-height: calc(100% - $app-header-height);
+      min-height: calc(100% - #{$app-header-height});
     }
 
     &-inner {
