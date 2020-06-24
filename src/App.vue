@@ -13,12 +13,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import AppNav from '@/components/AppNav.vue';
 
 export default {
   name: 'App',
   components: {
     AppNav,
+  },
+  data: () => ({
+    isLoading: false,
+  }),
+  created() {
+    this.onGetData();
+  },
+  methods: {
+    ...mapActions(['getData']),
+
+    async onGetData() {
+      try {
+        await this.getData();
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
