@@ -9,25 +9,31 @@
 <script>
 import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 
+const TYPES = {
+  ...HANDLE_TYPES,
+  CLOSE: 'close',
+};
+
 export default {
   name: 'HomePanelButton',
   props: {
     name: {
       type: String,
       required: true,
-      validator: (prop) => Object.values(HANDLE_TYPES).includes(prop),
+      validator: (prop) => Object.values(TYPES).includes(prop),
     },
   },
   computed: {
     buttonClasses() {
-      const { name } = this;
-
-      switch (name) {
-        case HANDLE_TYPES.ADD:
+      switch (this.name) {
+        case TYPES.ADD:
           return 'home-panel-button--add';
 
-        case HANDLE_TYPES.REMOVE:
+        case TYPES.REMOVE:
           return 'home-panel-button--remove';
+
+        case TYPES.CLOSE:
+          return 'home-panel-button--close';
 
         default:
           return '';
@@ -49,7 +55,6 @@ $size: 20px;
   height: $size;
   border: none;
   border-radius: 2px;
-  background-color: shado;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 75%;
@@ -62,6 +67,10 @@ $size: 20px;
 
   &--remove {
     background-image: url(~@mdi/svg/svg/minus.svg);
+  }
+
+  &--close {
+    background-image: url(~@mdi/svg/svg/close.svg);
   }
 
   &:hover {

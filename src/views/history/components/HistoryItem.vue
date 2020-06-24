@@ -3,7 +3,9 @@
     :class="classes"
     class="history-item"
   >
-    [{{ dateFormated }}] {{ data.name }}
+    <time>[{{ dateFormated }}]</time>
+    <span class="history-item__label"> [{{ label }}] </span>
+    <span>{ id: {{ data.id }}, name: {{ data.name }} }</span>
   </div>
 </template>
 
@@ -33,14 +35,24 @@ export default {
       return formatDate(this.date);
     },
     classes() {
-      const { type } = this;
-
-      switch (type) {
+      switch (this.type) {
         case HANDLE_TYPES.ADD:
           return 'history-item--add';
 
         case HANDLE_TYPES.REMOVE:
           return 'history-item--remove';
+
+        default:
+          return '';
+      }
+    },
+    label() {
+      switch (this.type) {
+        case HANDLE_TYPES.ADD:
+          return 'добавление';
+
+        case HANDLE_TYPES.REMOVE:
+          return 'удаление';
 
         default:
           return '';
@@ -54,12 +66,21 @@ export default {
 @import '~@/styles/variables.scss';
 
 .history-item {
-  &--add {
-    color: $color-positive;
-  }
+  $root: &;
 
-  &--remove {
-    color: $color-negative;
+  padding: 4px 0;
+
+  &__label {
+    // display: inline-block;
+    // min-width: 90px;
+
+    #{$root}--add & {
+      color: $color-positive;
+    }
+
+    #{$root}--remove & {
+      color: $color-negative;
+    }
   }
 }
 </style>

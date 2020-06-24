@@ -8,6 +8,9 @@ const createState = () => ({
   // а может стоило бы разнести данные и историю по разным модулям?
   // Тогда нужно было бы слушать заранее известные экшены addData и removeData
   historyList: [],
+  filters: {
+    search: '',
+  },
 });
 
 const getters = {
@@ -17,6 +20,13 @@ const getters = {
 
     // TODO: а может целесообразнее иметь копию dataList чем фильтровать?
     return state.dataList.filter((_) => !copyListIds.includes(_.id));
+  },
+
+  dataListFilteredBySearch: (state, { dataListFiltered: list }) => {
+    const search = state.filters.search?.toLowerCase();
+    if (!search) return list;
+
+    return list.filter((_) => _.name?.toLowerCase().includes(search));
   },
 
   addHistoryList: (state) => state.historyList
@@ -37,6 +47,10 @@ const mutations = {
 
   setHistory(state, payload) {
     state.historyList.push(payload);
+  },
+
+  setFilters(state, payload) {
+    state.filters = payload;
   },
 };
 
@@ -71,6 +85,12 @@ const actions = {
 
     commit('setCopyList', copyList);
     commit('setHistory', { date: new Date().getTime(), data, type });
+  },
+
+  filterBySearchDataList({ commit }, value) {
+    const search = value?.trim();
+    const data = { ...commit.filters, search };
+    commit('setFilters', data);
   },
 };
 

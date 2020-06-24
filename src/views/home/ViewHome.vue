@@ -1,9 +1,15 @@
 <template>
   <div class="view-home">
     <div class="view-home__row">
-      <div class="view-home__col">
+      <div class="view-home__col view-home__add-container">
+        <home-search-filter
+          :value="filters.search"
+          class="view-home__search-filter"
+          @input="onSearch"
+        />
+
         <home-panel
-          :data="dataListFiltered"
+          :data="dataListFilteredBySearch"
           type="add"
           @add="addData"
         />
@@ -22,19 +28,30 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import HomeSearchFilter from './components/HomeSearchFilter.vue';
 import HomePanel from './components/HomePanel.vue';
 
 export default {
   name: 'ViewHome',
   components: {
+    HomeSearchFilter,
     HomePanel,
   },
   computed: {
-    ...mapState(['copyList']),
-    ...mapGetters(['dataListFiltered']),
+    ...mapState(['copyList', 'filters']),
+    ...mapGetters(['dataListFilteredBySearch']),
   },
   methods: {
-    ...mapActions(['addData', 'removeData']),
+    ...mapActions([
+      'addData',
+      'removeData',
+      'filterBySearchDataList',
+    ]),
+
+    onSearch(value) {
+      // TODO: здесь нужен debounce
+      this.filterBySearchDataList(value);
+    },
   },
 };
 </script>
@@ -42,6 +59,8 @@ export default {
 <style lang="scss">
 
 .view-home {
+  display: flex;
+  flex-direction: column;
   padding: 30px;
 
   &__row {
@@ -56,6 +75,16 @@ export default {
     max-width: 100%;
 
     flex: 10000 1 0%;
+  }
+
+  &__search-filter {
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__add-container {
+    display: flex;
+    flex-direction: column;
   }
 
   &__remove-container {
