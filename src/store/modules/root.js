@@ -4,9 +4,6 @@ import * as HANDLE_TYPES from '@/helpers/enums/handle-type';
 const createState = () => ({
   dataList: [],
   copyList: [],
-  // TODO:
-  // а может стоило бы разнести данные и историю по разным модулям?
-  // Тогда нужно было бы слушать заранее известные экшены addData и removeData
   historyList: [],
   filters: {
     search: '',
@@ -18,7 +15,7 @@ const getters = {
     const copyListIds = state.copyList.map((_) => _.id);
     if (!copyListIds.length) return state.dataList;
 
-    // TODO: а может целесообразнее иметь копию dataList чем фильтровать?
+    // TODO: а может целесообразнее иметь копию dataList и перекладывать чем фильтровать?
     return state.dataList.filter((_) => !copyListIds.includes(_.id));
   },
 
@@ -26,7 +23,18 @@ const getters = {
     const search = state.filters.search?.toLowerCase();
     if (!search) return list;
 
-    return list.filter((_) => _.name?.toLowerCase().includes(search));
+    return list
+      .reduce((acc, data) => {
+        const isIncludes = data.name?.toLowerCase().includes(search);
+        const { length } = data.items.filter((_) => _.name?.toLowerCase().includes(search));
+        const count = isIncludes ? length + 1 : length;
+        if (!count) return acc;
+        const options = { data, count };
+        return acc.concat(options);
+      }, [])
+      // чем больше count, тем выше data
+      .sort((a, b) => b.count - a.count)
+      .map((_) => _.data);
   },
 
   addHistoryList: (state) => state.historyList

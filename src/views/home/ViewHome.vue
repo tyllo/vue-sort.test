@@ -58,6 +58,8 @@ export default {
 
 <style lang="scss">
 
+$input-height: 37px;
+
 .view-home {
   display: flex;
   flex-direction: column;
@@ -88,6 +90,7 @@ export default {
   }
 
   &__remove-container {
+    padding-top: $input-height + 20px;
     border-left: 1px solid lightgray;
   }
 }

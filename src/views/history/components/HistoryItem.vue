@@ -49,10 +49,10 @@ export default {
     label() {
       switch (this.type) {
         case HANDLE_TYPES.ADD:
-          return 'добавление';
+          return 'добавлен';
 
         case HANDLE_TYPES.REMOVE:
-          return 'удаление';
+          return 'удален';
 
         default:
           return '';
