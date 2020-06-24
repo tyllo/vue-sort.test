@@ -1,7 +1,13 @@
 <template>
   <div class="view-history">
     <history-list
+      v-if="data.length"
       :data="data"
+    />
+    <h2
+      v-else
+      class="view-history__empty-text"
+      v-text="emptyText"
     />
   </div>
 </template>
@@ -39,6 +45,34 @@ export default {
           return this.historyList;
       }
     },
+
+    emptyText() {
+      switch (this.type) {
+        case HANDLE_TYPES.ADD:
+          return 'История добавления пуста';
+
+        case HANDLE_TYPES.REMOVE:
+          return 'История удаления пуста';
+
+        default:
+          return 'История пуста';
+      }
+    },
   },
 };
 </script>
+
+<style lang="scss">
+
+.view-history {
+  padding: 20px;
+
+  &__empty-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-weight: normal;
+  }
+}
+</style>

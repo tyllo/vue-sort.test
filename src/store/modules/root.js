@@ -63,7 +63,7 @@ const mutations = {
 };
 
 const actions = {
-  async getData({ commit }) {
+  async getDataList({ commit }) {
     const { data } = await api.getData();
     commit('setDataList', data);
   },

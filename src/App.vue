@@ -6,18 +6,7 @@
 
     <main class="app__main">
       <div class="app__main-container">
-        <div
-          v-if="isLoading"
-          v-text="'Loading...'"
-        />
-
-        <div
-          v-else-if="isError"
-          v-text="'Ошибка загрузки данных, попробуте нажать F5'"
-        />
-
         <router-view
-          v-else
           class="app__main-inner"
         />
       </div>
@@ -26,37 +15,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import AppNav from '@/components/AppNav.vue';
 
 export default {
   name: 'App',
   components: {
     AppNav,
-  },
-  data: () => ({
-    isLoading: false,
-    isError: false,
-  }),
-  created() {
-    this.onGetData();
-  },
-  methods: {
-    ...mapActions(['getData']),
-
-    async onGetData() {
-      this.isLoading = true;
-
-      try {
-        await this.getData();
-      } catch (e) {
-        // elint-disable-next-line no-console
-        console.log(e);
-        this.isError = true;
-      }
-
-      this.isLoading = false;
-    },
   },
 };
 </script>
