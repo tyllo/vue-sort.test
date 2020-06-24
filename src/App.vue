@@ -5,9 +5,22 @@
     </header>
 
     <main class="app__main">
-      <router-view
-        class="app__main-inner"
-      />
+      <div class="app__main-container">
+        <div
+          v-if="isLoading"
+          v-text="'Loading...'"
+        />
+
+        <div
+          v-else-if="isError"
+          v-text="'Ошибка загрузки данных, попробуте нажать F5'"
+        />
+
+        <router-view
+          v-else
+          class="app__main-inner"
+        />
+      </div>
     </main>
   </div>
 </template>
@@ -23,6 +36,7 @@ export default {
   },
   data: () => ({
     isLoading: false,
+    isError: false,
   }),
   created() {
     this.onGetData();
@@ -31,11 +45,16 @@ export default {
     ...mapActions(['getData']),
 
     async onGetData() {
+      this.isLoading = true;
+
       try {
         await this.getData();
       } catch (e) {
         console.log(e);
+        this.isError = true;
       }
+
+      this.isLoading = false;
     },
   },
 };
@@ -43,6 +62,8 @@ export default {
 
 <style lang="scss">
 @import '~@/styles/variables.scss';
+
+$max-width: 768px;
 
 .app {
   display: flex;
@@ -63,8 +84,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
 
+    &-container {
+      margin: 0 auto;
+      width: 100%;
+      max-width: $max-width;
+      min-height: calc(100% - $app-header-height);
+    }
+
     &-inner {
       width: 100%;
+      height: 100%;
     }
   }
 }

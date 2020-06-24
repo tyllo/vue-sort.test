@@ -9,7 +9,7 @@
         />
       </div>
 
-      <div class="view-home__col">
+      <div class="view-home__col view-home__remove-container">
         <home-panel
           :data="copyList"
           type="remove"
@@ -56,6 +56,10 @@ export default {
     max-width: 100%;
 
     flex: 10000 1 0%;
+  }
+
+  &__remove-container {
+    border-left: 1px solid lightgray;
   }
 }
 </style>
